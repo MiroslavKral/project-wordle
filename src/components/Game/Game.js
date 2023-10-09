@@ -13,6 +13,8 @@ console.info({ answer });
 
 function Game() {
   const [results, setResults] = React.useState([]);
+  const win = results.some((result) => result.guess === answer);
+  const loose = results.length === NUM_OF_GUESSES_ALLOWED;
 
   const handleAddGues = (guess) => {
     if (results.length >= NUM_OF_GUESSES_ALLOWED) {
@@ -32,8 +34,28 @@ function Game() {
 
   return (
     <>
-      <GuessResults answer={answer} results={results}></GuessResults>
-      <GuessInput onUseGuess={handleAddGues}></GuessInput>
+      <GuessResults answer={answer} results={results} />
+      <GuessInput
+        disabled={win || loose}
+        onUseGuess={handleAddGues}
+      ></GuessInput>
+
+      {win && (
+        <div className="happy banner">
+          <p>
+            <strong>Congratulations!</strong> Got it in
+            <strong>{results.length} guesses</strong>.
+          </p>
+        </div>
+      )}
+
+      {loose && (
+        <div className="sad banner">
+          <p>
+            Sorry, the correct answer is <strong>{answer}</strong>.
+          </p>
+        </div>
+      )}
     </>
   );
 }
