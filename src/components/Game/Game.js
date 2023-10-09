@@ -32,7 +32,7 @@ function Game() {
 
   return (
     <>
-      <GuessResults results={results}></GuessResults>
+      <GuessResults answer={answer} results={results}></GuessResults>
       <GuessInput onUseGuess={handleAddGues}></GuessInput>
     </>
   );
